@@ -1,0 +1,231 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@*<head>
+
+        <title>Geolocation</title>
+
+    </head>
+
+ 
+
+<body >
+
+        <p id="demo">Click the button to get your position:</p>
+
+        <button onclick="getLocation()">Get your Location</button>
+
+        <div id="mapholder"></div>
+
+    </body >
+
+ 
+
+ 
+
+<script>
+
+        var x = document.getElementById("demo");
+
+        function getLocation() {
+
+            if (navigator.geolocation) {
+
+                navigator.geolocation.getCurrentPosition(showPosition, showError);
+
+            }
+
+            else { x.innerHTML = "Geolocation is not supported by this browser."; }
+
+        }
+
+ 
+
+        function showError(error) {
+
+            if (error.code == 1) {
+
+                x.innerHTML = "User denied the request for Geolocation."
+
+            }
+
+            else if (err.code == 2) {
+
+                x.innerHTML = "Location information is unavailable."
+
+            }
+
+            else if (err.code == 3) {
+
+                x.innerHTML = "The request to get user location timed out."
+
+            }
+
+            else {
+
+                x.innerHTML = "An unknown error occurred."
+
+            }
+
+        }
+
+ 
+
+        function showPosition(position) {
+
+            var latlondata = position.coords.latitude + "," + position.coords.longitude;
+
+            var latlon = "Your Latitude Position is:=" + position.coords.latitude + "," + "Your Longitude Position is:=" + position.coords.longitude;
+
+            alert(latlon)
+
+           var img_url = "http://maps.googleapis.com/maps/api/staticmap?center="+ latlondata + "&zoom=14&size=400x300&sensor=false";
+
+            document.getElementById("mapholder").innerHTML = "< img src = '" + img_url + "' /> ";
+
+        }
+
+    </script>*@
+
+ 
+
+<head>
+
+    <title>
+
+        Get User Current Location using Google Map Geolocation API Service in asp.net
+
+        website
+
+    </title>
+
+    <style type="text/css">
+
+        html {
+
+            height: 100%;
+
+        }
+
+ 
+
+        body {
+
+            height: 100%;
+
+            margin: 0;
+
+            padding: 0;
+
+        }
+
+ 
+
+        #MyMapLOC {
+
+            height: 100%;
+
+        }
+
+    </style>
+
+ 
+
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6v5-2uaq_wusHDktM9ILcqIrlPtnZgEk&sensor=false">
+
+ 
+
+    </script>
+
+ 
+
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false&libraries=places">
+
+ 
+
+    </script>
+
+ 
+
+    <script type="text/javascript">
+
+        if (navigator.geolocation) {
+
+            navigator.geolocation.getCurrentPosition(success);
+
+        } else {
+
+            alert("There is Some Problem on your current browser to get Geo Location!");
+
+        }
+
+ 
+
+        function success(position) {
+
+            var lat = position.coords.latitude;
+
+            var long = position.coords.longitude;
+
+            var city = position.coords.locality;
+
+            var LatLng = new google.maps.LatLng(lat, long);
+
+            var mapOptions = {
+
+                center: LatLng,
+
+                zoom: 12,
+
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+
+            };
+
+ 
+
+            var map = new google.maps.Map(document.getElementById("MyMapLOC"), mapOptions);
+
+            var marker = new google.maps.Marker({
+
+                position: LatLng,
+
+                title: "<div style = 'height:60px;width:200px'><b>Your location:</b><br />Latitude: "+ lat + +"<br />Longitude: " + long
+
+            });
+
+ 
+
+            marker.setMap(map);
+
+            var getInfoWindow = new google.maps.InfoWindow({
+
+                content: "<b>Your Current Location</b><br/> Latitude:" +lat + "<br /> Longitude:" + long + ""
+
+            });
+
+            getInfoWindow.open(map, marker);
+
+        }
+
+    </script>
+
+ s
+
+</head>
+
+<body>
+
+    <form id="form1">
+
+        <div id="MyMapLOC" style="width: 550px; height: 470px">
+
+        </div>
+
+    </form>
+
+</body>
+
+ 
